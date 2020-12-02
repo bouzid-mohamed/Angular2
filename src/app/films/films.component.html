@@ -1,0 +1,67 @@
+
+  <router-outlet></router-outlet>
+<div class="container">
+    <div class="alert alert-primary" role="alert">
+        <i class="fas fa-exclamation-circle"></i> The following movies are currently in theaters.
+    </div>
+    <div class="row">
+            <div class="col-sm-6 col-xs-6 hovereffect" *ngFor="let film of listFilms;let i=index "  (mouseover)="enter(i)"  (mouseout)="leave(i)">
+
+                <div class="list mb-2">
+                    <div class="list-header">
+                        <a href="single-movie.html" class="list-header-image">
+                        <img src='{{ "assets/images/" + film.image }}'> 
+                    </a>
+                    </div>
+                    <div class="list-content">
+                        <h2><a href="single-movie.html" class="text-black">{{film.title}}</a></h2>
+                        <span class="list-meta">
+                        <span class="list-meta-item"><i class="fas fa-clock"></i> {{film.duree}}</span>
+                        <a href="#" class="list-meta-item"><i class="fas fa-star">{{film.note}}</i> </a>
+                        </span>
+                        <p>{{film.description}}</p>
+                    </div>
+                    <div [style.visibility]=" film.etat ===1 ? 'visible' : 'hidden'"  class="overlay" >
+                        
+                       <p><button  class="buy-ticket info"  id="myBtn"(click)="change(film.video)"  ><i class="fas fa-video"  ></i> Watch Trailer</button> </p> 
+                        <button  [routerLink]="['/detail',film.id]"   class="buy-ticket info" ><i class="fas fa-ticket-alt"></i> full movie </button>
+              
+                       </div>
+                    
+                </div>
+               
+            </div>
+    <div id="myModal" class="modal" [ngStyle]="{'display': modalstyle }">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close" (click)="close()" >&times;</span>
+      <video id="myVideo"  width="90%"  height="50%" controls  >
+        <source src='{{ "assets/trailers/" + source }}'  type="video/mp4">
+            
+            
+        
+
+      </video>
+    </div>
+  
+  </div>
+
+
+
+
+______________________________
+
+
+
+
+
+
+
+
+  
+  
+
+
+ 
+ 
+
