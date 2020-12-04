@@ -6,7 +6,7 @@ export class Film {
     nbr : number ;
     video : String ;
     note : number ;
-    date :Date ;
+    full :string ;
     id :number ;
     etat : number;
 }

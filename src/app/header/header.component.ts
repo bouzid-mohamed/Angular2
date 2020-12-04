@@ -6,10 +6,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  inputVal :string= 'none'   ;
+  
+  
 
-  constructor() { }
+  constructor() {
+    
+   }
 
   ngOnInit(): void {
+  }
+  change(){
+    this.inputVal='' ;
+  
+    
+  }
+  addItem(newItem: string) {
+    this.inputVal=newItem ;
+    console.log(newItem) ;
   }
 
 }

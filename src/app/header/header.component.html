@@ -33,7 +33,12 @@
                 <a class="nav-link" href="#"><i class="fas fa-clock"></i> Upcoming</a>
             </li>
         </ul>
-        <a class="nav-button" href="movies.html"><i class="fas fa-ticket-alt"></i> Get Tickets</a>
+        <button class="nav-button" (click)="change()" ><i class="fas fa-ticket-alt"></i> Add Movie</button>
+
+
+        
+        
+
     </div>
 </nav>
 <!-- breadcrumbs -->
@@ -43,3 +48,5 @@
         <li class="breadcrumb-item active" aria-current="page">Movies</li>
     </ol>
 </nav>
+
+<app-films (newItemEvent)="addItem($event)"  [data]="inputVal" ></app-films>

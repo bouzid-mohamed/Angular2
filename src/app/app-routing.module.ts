@@ -5,11 +5,10 @@ import { MovieComponent } from './movie/movie.component';
 
 
 const routes: Routes = [
-  { path: "", component:FilmsComponent, children:
-         [
+  
+         
           { path: "detail/:id", component:MovieComponent},
-         ]},
- 
+         
  
 ];
 

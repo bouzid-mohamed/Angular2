@@ -8,6 +8,8 @@ import { HeaderComponent } from './header/header.component';
 import { FilmsComponent } from './films/films.component';
 import { MovieComponent } from './movie/movie.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +20,8 @@ import { MovieComponent } from './movie/movie.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
