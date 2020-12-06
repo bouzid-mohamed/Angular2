@@ -7,6 +7,9 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { FilmsComponent } from './films/films.component';
 import { MovieComponent } from './movie/movie.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 
@@ -16,11 +19,15 @@ import { MovieComponent } from './movie/movie.component';
     FooterComponent,
     HeaderComponent,
     FilmsComponent,
+    
     MovieComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     
   ],
   providers: [],

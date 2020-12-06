@@ -5,12 +5,12 @@
   </div>
   <div class="row">
     <div class="col-sm-6 col-xs-6 hovereffect" *ngFor="let film of listFilms;let i=index " (mouseover)="enter(i)"
-      (mouseout)="leave(i)">
+      (mouseout)="leave(i)"  >
 
-      <div class="list mb-2">
+      <div class="list mb-2" >
         <div class="list-header">
           <a href="single-movie.html" class="list-header-image">
-            <img src='{{ "assets/images/" + film.image }}'>
+            <img src='{{ "http://localhost/images/" + film.image }}'>
           </a>
         </div>
         <div class="list-content">
@@ -38,7 +38,7 @@
       <div class="modal-content">
         <span class="close" (click)="close()">&times;</span>
         <video id="myVideo" width="90%" height="50%" controls>
-          <source src='{{ "assets/trailers/" + source }}' type="video/mp4">
+          <source src='{{ "http://localhost/trailers/" + source }}' type="video/mp4">
 
         </video>
       </div>
@@ -50,28 +50,45 @@
     <div   id="myModal" class="wrapper modal " [ngStyle]="{'display': data }"  >
      
       <div class="inner">
-          <form action=""  >
+          <form  #f="ngForm" (ngSubmit)="addFilm()"  >
+            <input name="MAX_FILE_SIZE" value="100000000000000"  type="hidden"/>
+
+           
               <h3>Add Movie</h3>
               <div class="form-group">
                   <div class="form-wrapper">
                       <label for="">Title</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" name="title" [(ngModel)]="film.title" #title="ngModel" required>
+                      <div class="text-danger" *ngIf="title.invalid && title.touched">
+                        title Required
+                        </div>
                   </div>
                   
                   <div class="form-wrapper">
                       <label for="">Note</label>
-                      <input type="number" class="form-control">
+                      <input type="number" class="form-control" name="note" [(ngModel)]="film.note" #note="ngModel" required max="10" min="0">
+                      <div class="text-danger" *ngIf="note.invalid && note.touched">
+                        note required
+                        </div>
                   </div>
               </div>
               <div class="form-wrapper">
                 <label for="">Description</label>
-                <textarea class="form-control"  rows="3"></textarea>
+                <textarea class="form-control"  rows="3" name="description" [(ngModel)]="film.description" #description="ngModel" required maxlength="1000" minlength="15" ></textarea>
+                <div *ngIf="description.invalid" class="text-danger" >
+                  <div class="text-danger" *ngIf="description.touched && description.errors.required ">Description required</div>
+                  <div *ngIf="description.errors.minlength"> 15 character minimum </div>
+              </div>
+                  
             </div>
               <div class="form-wrapper ">
                 <div class="custom-file">
                
-                  <input type="file" class="custom-file-input" id="customFile">
+                  <input type="file" class="custom-file-input" id="uploadBR" name="photo" [(ngModel)]="film.image" #photo="ngModel" required    accept="image/jpeg">
                   <label class="custom-file-label" for="customFile">Photo</label>
+                  <div class="text-danger" *ngIf="photo.invalid && photo.touched">
+                    photo required
+                    </div>
                 </div>
                   
               </div>
@@ -79,45 +96,33 @@
               <div class="form-wrapper ">
                 <div class="custom-file">
               
-                  <input type="file" class="custom-file-input" id="customFile">
+                  <input type="file" class="custom-file-input" id="uploadTR"  name="trailer" [(ngModel)]="film.video" #trailer="ngModel" required  accept="video/mp4">
                   <label class="custom-file-label" for="customFile">Trailer</label>
+                  <div class="text-danger" *ngIf="trailer.invalid && trailer.touched">
+                    trailer required
+                    </div>
                 </div>
                   
               </div>
               <div class="form-wrapper ">
                 <div class="custom-file">
              
-                  <input type="file" class="custom-file-input" id="customFile">
-                  <label class="custom-file-label" for="customFile">Video</label>
+                  <input type="file" class="custom-file-input" id="uploadMR"  name="movie" [(ngModel)]="film.full" #movie="ngModel" required accept="video/mp4">
+                  <label class="custom-file-label" for="customFile"  >Video</label>
+                  <div class="text-danger" *ngIf="movie.invalid && movie.touched">
+                    Video required
+                    </div>
                 </div>
                   
               </div>
              
-              <div > <button style="display: inline;margin-right: 2%;">Add Film</button>
+              <div > <button style="display: inline;margin-right: 2%; background-color: green" type="submit" [disabled]="f.invalid" >Add Film</button>
                 <button (click)="closeForm('none')" style="display: inline; background-color: dimgray;">Close</button>
               </div>
               
           </form>
       </div>
   </div>
-  
-  
-
-
-    
-		
-   
-
   </div>
-
-
-  
-  ______________________________
-
-  <h4>NgClass</h4>
-  <ul>
-    <li [ngClass]="{ 'style.color' : play=== 1}">UK
-    </li>
-  </ul>
   <router-outlet></router-outlet>
-</div>
+
