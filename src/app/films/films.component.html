@@ -1,7 +1,12 @@
 
 <div class="container">
+  
   <div class="alert alert-primary" role="alert">
     <i class="fas fa-exclamation-circle"></i> The following movies are currently in theaters.
+  </div>
+  <div class="aler" *ngIf="isHidden">
+    <span class="closebtn" (click)="isHiddenFalse()">&times;</span>
+    Movie Added.
   </div>
   <div class="row">
     <div class="col-sm-6 col-xs-6 hovereffect" *ngFor="let film of listFilms;let i=index " (mouseover)="enter(i)"

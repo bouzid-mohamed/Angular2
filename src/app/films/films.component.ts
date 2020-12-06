@@ -1,5 +1,5 @@
 import { Input, Component, OnInit, Output, EventEmitter } from '@angular/core';
-import *  as  data from '../data.json';
+
 import { Film } from '../models/film';
 import { FilmServiceService } from '../Services/film-service.service';
 import { ActivatedRoute } from '@angular/router';
@@ -21,6 +21,7 @@ export class FilmsComponent implements OnInit {
   source: string;
   play: Number;
   modalstyle2: string;
+  isHidden: boolean ;
   @Input() data: string;
   @Output() newItemEvent = new EventEmitter<string>();
   myForm = new FormGroup({
@@ -33,18 +34,19 @@ export class FilmsComponent implements OnInit {
 
   constructor(private sp: FilmServiceService, private http: HttpClient) {
     this.modalstyle = 'none';
-
     this.play = 0;
     this.film = new Film();
+    this.isHidden = false ;
 
   }
 
   ngOnInit() {
 
-
-    this.listFilms = this.sp.getFilms();
-
-
+    this.sp.getFilms().subscribe((data:Film[])=>{this.listFilms =data});
+    
+  }
+  isHiddenFalse(){
+    this.isHidden=false ;
   }
   closeForm(value: string) {
     this.newItemEvent.emit(value);
@@ -95,6 +97,8 @@ export class FilmsComponent implements OnInit {
     this.http.post('http://localhost:80/uploadMovie.php', formData3)
       .subscribe(res => {
       })
+      this.closeForm('none') ;
+      this.isHidden = true ;
   }
 
 

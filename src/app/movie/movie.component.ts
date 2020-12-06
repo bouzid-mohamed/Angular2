@@ -27,7 +27,7 @@ export class MovieComponent implements OnInit {
   ngOnInit(): void {
    
   this.ar.paramMap.subscribe(res=>this.valId=res.get('id'), erreur=>console.log("erreur"), ()=>console.log("finish"));
-  this.listFilms = this.sp.getFilms() ;
+  this.sp.getFilms().subscribe((data:Film[])=>{this.listFilms =data});
   for (let e of this.listFilms) {
     if(e.id==parseInt(this.valId))
     this.name = e.full ;
