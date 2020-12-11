@@ -1,28 +1,46 @@
-
 <div class="container">
-  
-  <div class="alert alert-primary" role="alert">
-    <i class="fas fa-exclamation-circle"></i> The following movies are currently in theaters.
+
+
+  <div>
+    <div class="searchbar" style="margin-bottom:3%;">
+      <input class="search_input" type="text" name="" placeholder="Search...">
+      <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+    </div>
+
   </div>
-  <div class="aler" *ngIf="isHidden">
+
+
+
+
+
+  <div class="container h-100">
+
+  </div>
+
+
+
+  <div class="aler" *ngIf="isHidden" style="margin-top:3%">
     <span class="closebtn" (click)="isHiddenFalse()">&times;</span>
-    Movie Added.
+    {{text}}
   </div>
   <div class="row">
-    <div class="col-sm-6 col-xs-6 hovereffect" *ngFor="let film of listFilms;let i=index " (mouseover)="enter(i)"
-      (mouseout)="leave(i)"  >
+    <div class="col-sm-6 col-xs-6 hovereffect" *ngFor="let film of listFilms  ;let i=index " (mouseover)="enter(i)"
+      (mouseout)="leave(i)">
 
-      <div class="list mb-2" >
+
+      <div class="list mb-2">
         <div class="list-header">
           <a href="single-movie.html" class="list-header-image">
-            <img src='{{ "http://localhost/images/" + film.image }}'>
+            <img src='{{ "http://localhost:80/images/" + film.image }}'>
+
           </a>
         </div>
         <div class="list-content">
           <h2><a href="single-movie.html" class="text-black">{{film.title}}</a></h2>
           <span class="list-meta">
-            <span class="list-meta-item"><i class="fas fa-clock"></i> {{film.duree}}</span>
+            <span class="list-meta-item"><i class="fas fa-ticket-alt"></i> {{film.categorie}}</span>
             <a href="#" class="list-meta-item"><i class="fas fa-star">{{film.note}}</i> </a>
+            <span class="list-meta-item"><i class="fas fa-ticket-alt"></i> {{film.nbr}} vu</span>
           </span>
           <p>{{film.description}}</p>
         </div>
@@ -30,20 +48,25 @@
 
           <p><button class="buy-ticket info" id="myBtn" (click)="change(film.video)"><i class="fas fa-video"></i> Watch
               Trailer</button> </p>
-          <button (click)="watchfilm()" [routerLink]="['/detail',film.id]" class="buy-ticket info"><i
+          <button (click)="watchfilm(film)" [routerLink]="['/detail',film.id]" class="buy-ticket info"><i
               class="fas fa-ticket-alt"></i> full movie </button>
+          <button (click)="delete(film.id)" class="buy-ticket info"><i class="fas fa-ticket-alt"></i> Delete</button>
+          <button (click)="formupdate(film)" class="buy-ticket info"><i class="fas fa-ticket-alt"></i> Update</button>
+
 
         </div>
 
       </div>
 
+
     </div>
+
     <div id="myModal" class="modal" [ngStyle]="{'display': modalstyle }">
       <!-- Modal content -->
       <div class="modal-content">
         <span class="close" (click)="close()">&times;</span>
-        <video id="myVideo" width="90%" height="50%" controls>
-          <source src='{{ "http://localhost/trailers/" + source }}' type="video/mp4">
+        <video id="mysrc" width="90%" height="50%" controls>
+          <source src='{{ "http://localhost:80/trailers/" + source}}' type="video/mp4">
 
         </video>
       </div>
@@ -51,83 +74,186 @@
     </div>
 
 
+    <div id="myModal" class="wrapper modal " [ngStyle]="{'display': data }">
 
-    <div   id="myModal" class="wrapper modal " [ngStyle]="{'display': data }"  >
-     
       <div class="inner">
-          <form  #f="ngForm" (ngSubmit)="addFilm()"  >
-            <input name="MAX_FILE_SIZE" value="100000000000000"  type="hidden"/>
+        <form #f="ngForm" (ngSubmit)="addFilm()">
+          <input name="MAX_FILE_SIZE" value="100000000000000" type="hidden" />
 
-           
-              <h3>Add Movie</h3>
-              <div class="form-group">
-                  <div class="form-wrapper">
-                      <label for="">Title</label>
-                      <input type="text" class="form-control" name="title" [(ngModel)]="film.title" #title="ngModel" required>
-                      <div class="text-danger" *ngIf="title.invalid && title.touched">
-                        title Required
-                        </div>
-                  </div>
-                  
-                  <div class="form-wrapper">
-                      <label for="">Note</label>
-                      <input type="number" class="form-control" name="note" [(ngModel)]="film.note" #note="ngModel" required max="10" min="0">
-                      <div class="text-danger" *ngIf="note.invalid && note.touched">
-                        note required
-                        </div>
-                  </div>
+
+          <h3>Add Movie</h3>
+          <div class="form-group">
+            <div class="form-wrapper">
+              <label for="">Title</label>
+              <input type="text" class="form-control" name="title" [(ngModel)]="film.title" #title="ngModel" required>
+              <div class="text-danger" *ngIf="title.invalid && title.touched">
+                title Required
               </div>
-              <div class="form-wrapper">
-                <label for="">Description</label>
-                <textarea class="form-control"  rows="3" name="description" [(ngModel)]="film.description" #description="ngModel" required maxlength="1000" minlength="15" ></textarea>
-                <div *ngIf="description.invalid" class="text-danger" >
-                  <div class="text-danger" *ngIf="description.touched && description.errors.required ">Description required</div>
-                  <div *ngIf="description.errors.minlength"> 15 character minimum </div>
-              </div>
-                  
             </div>
-              <div class="form-wrapper ">
-                <div class="custom-file">
-               
-                  <input type="file" class="custom-file-input" id="uploadBR" name="photo" [(ngModel)]="film.image" #photo="ngModel" required    accept="image/jpeg">
-                  <label class="custom-file-label" for="customFile">Photo</label>
-                  <div class="text-danger" *ngIf="photo.invalid && photo.touched">
-                    photo required
-                    </div>
-                </div>
-                  
-              </div>
-              
-              <div class="form-wrapper ">
-                <div class="custom-file">
-              
-                  <input type="file" class="custom-file-input" id="uploadTR"  name="trailer" [(ngModel)]="film.video" #trailer="ngModel" required  accept="video/mp4">
-                  <label class="custom-file-label" for="customFile">Trailer</label>
-                  <div class="text-danger" *ngIf="trailer.invalid && trailer.touched">
-                    trailer required
-                    </div>
-                </div>
-                  
-              </div>
-              <div class="form-wrapper ">
-                <div class="custom-file">
-             
-                  <input type="file" class="custom-file-input" id="uploadMR"  name="movie" [(ngModel)]="film.full" #movie="ngModel" required accept="video/mp4">
-                  <label class="custom-file-label" for="customFile"  >Video</label>
-                  <div class="text-danger" *ngIf="movie.invalid && movie.touched">
-                    Video required
-                    </div>
-                </div>
-                  
-              </div>
-             
-              <div > <button style="display: inline;margin-right: 2%; background-color: green" type="submit" [disabled]="f.invalid" >Add Film</button>
-                <button (click)="closeForm('none')" style="display: inline; background-color: dimgray;">Close</button>
-              </div>
-              
-          </form>
-      </div>
-  </div>
-  </div>
-  <router-outlet></router-outlet>
 
+            <div class="form-wrapper">
+              <label for="">Note</label>
+              <input type="number" class="form-control" name="note" [(ngModel)]="film.note" #note="ngModel" required
+                max="10" min="0">
+              <div class="text-danger" *ngIf="note.invalid && note.touched">
+                note required
+              </div>
+            </div>
+            <div class="form-wrapper" style="margin-left: 5%;">
+              <label for="">Categorie</label>
+              <select [(ngModel)]="film.categorie" class="form-control" name="cat"  #cat="ngModel" required>
+                <option value="drame" >Drame</option>
+                <option value="Comedie">Comédie </option>
+                <option value="thrillers">Thriller</option>
+                <option value="action">Action</option>
+              </select>
+  
+            </div>
+            <div class="text-danger" *ngIf="cat.invalid && cat.touched">
+              Category required
+            </div>
+
+          </div>
+            
+          
+
+          <div class="form-wrapper">
+            <label for="">Description</label>
+            <textarea class="form-control" rows="3" name="description" [(ngModel)]="film.description"
+              #description="ngModel" required maxlength="1000" minlength="15"></textarea>
+            <div *ngIf="description.invalid" class="text-danger">
+              <div class="text-danger" *ngIf="description.touched && description.errors.required ">Description required
+              </div>
+              <div *ngIf="description.errors.minlength"> 15 character minimum </div>
+            </div>
+
+          </div>
+          <div class="form-wrapper ">
+            <div class="custom-file">
+
+              <input type="file" class="custom-file-input" id="uploadBR" name="photo" [(ngModel)]="film.image"
+                #photo="ngModel" required accept="image/jpeg">
+              <label class="custom-file-label" for="customFile">Photo</label>
+              <div class="text-danger" *ngIf="photo.invalid && photo.touched">
+                photo required
+              </div>
+            </div>
+
+          </div>
+
+          <div class="form-wrapper ">
+            <div class="custom-file">
+
+              <input type="file" class="custom-file-input" id="uploadTR" name="trailer" [(ngModel)]="film.video"
+                #trailer="ngModel" required accept="video/mp4">
+              <label class="custom-file-label" for="customFile">Trailer</label>
+              <div class="text-danger" *ngIf="trailer.invalid && trailer.touched">
+                trailer required
+              </div>
+            </div>
+
+          </div>
+          <div class="form-wrapper ">
+            <div class="custom-file">
+
+              <input type="file" class="custom-file-input" id="uploadMR" name="movie" [(ngModel)]="film.full"
+                #movie="ngModel" required accept="video/mp4">
+              <label class="custom-file-label" for="customFile">Video</label>
+              <div class="text-danger" *ngIf="movie.invalid && movie.touched">
+                Video required
+              </div>
+            </div>
+
+          </div>
+
+
+          <div> <button style="display: inline;margin-right: 2%; background-color: green" type="submit"
+              [disabled]="f.invalid">Add Film</button>
+            <button (click)="closeForm('none')" style="display: inline; background-color: dimgray;">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="myModal" class="wrapper modal " [ngStyle]="{'display': data2 }">
+
+      <div class="inner" style="height: 90%;width: 62%;">
+        <form [formGroup]="movie_form" (ngSubmit)="update()">
+          <h3>Update Movie</h3>
+
+
+          <div class="form-group">
+            <div class="form-wrapper">
+              <label for="">Title</label>
+              <input type="text" class="form-control" formControlName="title1" name="titleM" [value]="movietoModify.title" [(ngModel)]="movietoModify.title" >
+              <div class="text-danger" *ngIf="title1.invalid && title1.touched">
+                title Required 
+              </div>
+            </div>
+
+            <div class="form-wrapper">
+              <label for="">Note</label>
+              <input type="number" class="form-control " formControlName="notemovie" name="noteM" [value]="movietoModify.note" [(ngModel)]="movietoModify.note" >
+              <div class="text-danger" *ngIf="notemovie.invalid && notemovie.touched">
+                note required
+              </div>
+            </div>
+          </div>
+          <div class="form-wrapper">
+            <label for="">Description</label>
+            <textarea class="form-control" formControlName="descmovie" name="desc" [value]="movietoModify.description" rows="3" [(ngModel)]="movietoModify.description"></textarea>
+            <div *ngIf="descmovie.invalid" class="text-danger">
+              <div class="text-danger" *ngIf="descmovie.touched && descmovie.errors.required ">Description required
+              </div>
+              <div *ngIf="descmovie.errors.minlength"> 15 character minimum </div>
+            </div>
+
+          </div>
+          <div class="form-wrapper ">
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="uploadB" name="phtom" accept="image/jpeg">
+              <label class="custom-file-label" for="customFile">Photo</label>
+             
+            </div>
+
+          </div>
+
+          <div class="form-wrapper ">
+            <div class="custom-file">
+
+              <input type="file" class="custom-file-input" id="uploadT"  name="trailerm" accept="video/mp4">
+              
+              <label class="custom-file-label" for="customFile">Trailer</label>
+              
+            </div>
+
+          </div>
+
+          <div class="form-wrapper ">
+            <div class="custom-file">
+
+              <input type="file" class="custom-file-input" id="uploadM" name="fullm" accept="video/mp4">
+              <label class="custom-file-label" for="customFile">Video</label>
+            
+            </div>
+
+          </div>
+          <div> <button style="display: inline;margin-right: 2%; background-color: green" type="submit" >Update Film</button>
+          <a (click)="closeFormup()" class="btn btn-outline-secondary btn-lg btn-block" style="display: inline;">Close</a>
+        </div>
+
+  
+
+
+
+
+
+        </form>
+      </div>
+    </div>
+
+
+
+
+  </div>
+
+  <router-outlet></router-outlet>

@@ -244,10 +244,7 @@ nav .breadcrumb {
     color: #cfcfcf;
 }
 
-.breadcrumb-item a:hover {
-    color: #c90087;
-    text-decoration: none;
-}
+
 
 .list {
     display: block;

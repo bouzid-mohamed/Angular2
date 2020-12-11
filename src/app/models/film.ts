@@ -1,6 +1,6 @@
 export class Film {
     title : string;
-    duree : number;
+    categorie : number;
     image : String ;
     description : string ;
     nbr : number ;

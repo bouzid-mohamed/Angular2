@@ -1,14 +1,19 @@
 
-{{valId}}
+
+<div *ngFor="let film of listFilms">
+  <div *ngIf="film.id == valId ">
+  
 <div id="myModal" class="modal" [ngStyle]="{'display': modalstyle }">
     <!-- Modal content -->
     <div class="modal-content">
       <span class="close" (click)="close()">&times;</span>
       <video id="myVideo" width="90%" height="50%" controls>
-        <source src='{{ "http://localhost/films/" + name }}' type="video/mp4">
+        <source src='{{ "http://localhost:80/films/" + film.full}}' type="video/mp4">
 
       </video>
     </div>
 
   </div>
- 
+</div>
+
+</div>
