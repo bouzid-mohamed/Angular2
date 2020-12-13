@@ -6,10 +6,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
+  vis:boolean ;
+  text : string ;
 
-  constructor() { }
+  constructor() { 
+    this.vis = true ;
+    this.text="" ;
+  }
 
   ngOnInit(): void {
+   
+  }
+  about(){
+    this.vis = false ;
+    this.text ="Lorem Ipsum is simply dummy text of the printing and typesetting industry. " ;
+  }
+  ref(){
+    this.vis = false ;
+    this.text ="Lorem Ipsum is simply dummy . " ;
+  }
+  team(){
+    this.vis = false ;
+    this.text ="Lorem Ipsum is simply dummy text of the printing and typesetting industry. " ;
   }
 
 }

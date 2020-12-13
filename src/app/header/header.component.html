@@ -7,17 +7,17 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
 <nav class="navbar navbar-expand-md">
-    <a class="navbar-brand" href="index.html"><img src="assets/images/logo.png" /></a>
+    <a class="navbar-brand" routerLink="/" ><img src="assets/images/logo.png" /></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars"></i>
   </button>
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a class="nav-link" routerLink="/" ><i class="fas fa-home"></i> Home</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#"><i class="fas fa-film"></i> Movies</a>
+                <a class="nav-link " href="#" aria-disabled="true"><i class="fas fa-film"></i> Movies</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-crown"></i> Theaters</a>
@@ -29,9 +29,7 @@
                     <a class="dropdown-item" href="#">Friday</a>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-clock"></i> Upcoming</a>
-            </li>
+          
         </ul>
         <button class="nav-button" (click)="change()" ><i class="fas fa-ticket-alt"></i> Add Movie</button>
 

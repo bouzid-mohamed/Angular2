@@ -34,6 +34,8 @@ export class FilmsComponent implements OnInit {
   });
   text: string ;
   data2: string;
+  view:number ;
+  listFiltred: Film[];
 
 
 
@@ -48,6 +50,7 @@ export class FilmsComponent implements OnInit {
     this.movietoModify= new Film();
     this.isHidden = false ;
     this.data2 = 'none';
+    this.view = 0 ;
     
     
 
@@ -59,7 +62,8 @@ export class FilmsComponent implements OnInit {
     this.movie_form= this.formb.group({
       title1 : ['',[Validators.required, Validators.minLength(3)]],
       notemovie : ['',[Validators.required, Validators.min(0),Validators.max(10)]],
-      descmovie : ['',[Validators.required, Validators.minLength(15),Validators.maxLength(1000)]]
+      descmovie : ['',[Validators.required, Validators.minLength(15),Validators.maxLength(1000)]],
+      catmovie : ['',[Validators.required]] 
       
      
     })
@@ -74,6 +78,7 @@ export class FilmsComponent implements OnInit {
   get photomovie (){return this.movie_form.get('photomovie');} 
   get trailermovie (){return this.movie_form.get('trailermovie');}
   get fullmovie (){return this.movie_form.get('fullmovie');} 
+  get catmovie (){return this.movie_form.get('catmovie');} 
  
   isHiddenFalse(){
     this.isHidden=false ;
@@ -102,7 +107,13 @@ export class FilmsComponent implements OnInit {
   }
   watchfilm(a:Film) {
     
-    this.play = 1;
+   let f: Film = new Film() ;
+   f=a ;
+   f.nbr = a.nbr+1 ;
+   this.sp.updateMovie(f.id,f);
+
+   
+
 
    
    
@@ -146,8 +157,9 @@ export class FilmsComponent implements OnInit {
     confirm( "Want to delete this film ? ");
     this.sp.deleteFilm(id).subscribe();
     this.text = "Movie Deleted " ;
-    this.ngOnInit() ;
+    //this.ngOnInit() ;
     this.isHidden = true ;
+    location.reload();
   }
   formupdate(a:Film){
     this.data2 = 'block';
@@ -194,18 +206,21 @@ export class FilmsComponent implements OnInit {
       
       
       this.sp.updateMovie(this.movietoModify.id,this.movietoModify).subscribe(next=>this._router.navigateByUrl('/'));
-      console.log(this.movietoModify) ;
+    
       this.data2 = 'none' ;
       this.text = "Edited Movie" ;
       this.isHidden=true;
-      this.ngOnInit() ;
-     
-
-   
-    
   }
- 
-
+  changeview(){
+   this.view = 1 ;
+   let tr = (<HTMLInputElement>document.getElementById('search')).value;
+   let listF = this.listFilms.filter(x=>x.categorie.toUpperCase().includes(tr.toUpperCase())|| x.title.toUpperCase().includes(tr.toUpperCase())||x.description.toUpperCase().includes(tr.toUpperCase()) ) ;
+  
+   this.listFiltred= listF ;
+  
+  }
+  
+ y
 
 
 }

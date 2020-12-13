@@ -39,8 +39,9 @@ export class FilmServiceService {
       }
       updateMovie (id: number, movie: Film): Observable<Film> {
      return this._http.put<Film>(this.moviesUrl+'/'+ id, movie, this.httpOptions);}
-    
 
+     getmovies(id: number): Observable<Film> {
+          return this._http.get<Film>(this.moviesUrl +'/'+ id);  }
     
 }
 

@@ -3,8 +3,8 @@
 
   <div>
     <div class="searchbar" style="margin-bottom:3%;">
-      <input class="search_input" type="text" name="" placeholder="Search...">
-      <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+      <input class="search_input" id ="search" type="text" name="" placeholder="Search...">
+      <a  class="search_icon" (click)="changeview()"><i class="fas fa-search"  ></i></a>
     </div>
 
   </div>
@@ -24,11 +24,13 @@
     {{text}}
   </div>
   <div class="row">
-    <div class="col-sm-6 col-xs-6 hovereffect" *ngFor="let film of listFilms  ;let i=index " (mouseover)="enter(i)"
-      (mouseout)="leave(i)">
 
 
-      <div class="list mb-2">
+    <div class="col-sm-6 col-xs-6 hovereffect" *ngFor="let film of listFiltred  ;let i=index " (mouseover)="enter(i)"
+      (mouseout)="leave(i)"  >
+
+     
+      <div class="list mb-2" *ngIf="view == 1 ">
         <div class="list-header">
           <a href="single-movie.html" class="list-header-image">
             <img src='{{ "http://localhost:80/images/" + film.image }}'>
@@ -57,6 +59,54 @@
         </div>
 
       </div>
+
+      
+
+
+    </div>
+
+
+
+
+
+
+
+
+    <div class="col-sm-6 col-xs-6 hovereffect" *ngFor="let film of listFilms  ;let i=index " (mouseover)="enter(i)"
+      (mouseout)="leave(i)"  >
+
+     
+      <div class="list mb-2" *ngIf="view == 0 ">
+        <div class="list-header">
+          <a href="single-movie.html" class="list-header-image">
+            <img src='{{ "http://localhost:80/images/" + film.image }}'>
+
+          </a>
+        </div>
+        <div class="list-content">
+          <h2><a href="single-movie.html" class="text-black">{{film.title}}</a></h2>
+          <span class="list-meta">
+            <span class="list-meta-item"><i class="fas fa-ticket-alt"></i> {{film.categorie}}</span>
+            <a href="#" class="list-meta-item"><i class="fas fa-star">{{film.note}}</i> </a>
+            <span class="list-meta-item"><i class="fas fa-ticket-alt"></i> {{film.nbr}} vu</span>
+          </span>
+          <p>{{film.description}}</p>
+        </div>
+        <div [style.visibility]=" film.etat ===1 ? 'visible' : 'hidden'" class="overlay">
+
+          <p><button class="buy-ticket info" id="myBtn" (click)="change(film.video)"><i class="fas fa-video"></i> Watch
+              Trailer</button> </p>
+          <button (click)="watchfilm(film)" [routerLink]="['/detail',film.id]" class="buy-ticket info"><i
+              class="fas fa-ticket-alt"></i> full movie </button>
+          <button (click)="delete(film.id)" class="buy-ticket info"><i class="fas fa-ticket-alt"></i> Delete</button>
+          <button (click)="formupdate(film)" class="buy-ticket info"><i class="fas fa-ticket-alt"></i> Update</button>
+
+
+        </div>
+
+      </div>
+
+      
 
 
     </div>
@@ -107,16 +157,12 @@
                 <option value="thrillers">Thriller</option>
                 <option value="action">Action</option>
               </select>
+              <div class="text-danger" *ngIf="cat.invalid && cat.touched">
+                Category required
+              </div>
   
             </div>
-            <div class="text-danger" *ngIf="cat.invalid && cat.touched">
-              Category required
-            </div>
-
           </div>
-            
-          
-
           <div class="form-wrapper">
             <label for="">Description</label>
             <textarea class="form-control" rows="3" name="description" [(ngModel)]="film.description"
@@ -176,7 +222,7 @@
     </div>
     <div id="myModal" class="wrapper modal " [ngStyle]="{'display': data2 }">
 
-      <div class="inner" style="height: 90%;width: 62%;">
+      <div class="inner" style="height: 95%;width: 62%;">
         <form [formGroup]="movie_form" (ngSubmit)="update()">
           <h3>Update Movie</h3>
 
@@ -197,6 +243,22 @@
                 note required
               </div>
             </div>
+            <div class="form-wrapper" style="margin-left: 5%;">
+              <label for="">Categorie</label>
+              <select [(ngModel)]="movietoModify.categorie" class="form-control" formControlName="catmovie" name="catm" [value]="'Drame'"  >
+
+                <option [ngValue]="'Drame'" [selected]="movietoModify.categorie=== 'Drame'" >Drame</option>
+                <option [ngValue]="'Comedie'" [selected]="movietoModify.categorie=== 'Comédie'">Comédie</option>
+                <option [ngValue]="'Thrillers'" [selected]="movietoModify.categorie=== 'Thriller'">Thriller</option>
+                <option [ngValue]="'Action'" [selected]="movietoModify.categorie=== 'Action'" >Action</option>
+               
+              </select>
+              <div class="text-danger" *ngIf="catmovie.invalid && catmovie.touched">
+                Categorie required
+              </div>
+  
+            </div>
+            
           </div>
           <div class="form-wrapper">
             <label for="">Description</label>

@@ -4,29 +4,40 @@
     <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
+
+
+<section class="newsletter text-white text-center" [hidden]="vis" style="margin-top: 5%;">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 mx-auto">
+                <h2 class="mb-4">{{text}}</h2>
+            </div>
+            
+        </div>
+    </div>
+</section>
 <footer class="footer">
 
     <div class="container">
         <div class="row">
             <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
                 <ul class="list-inline mb-2">
-                    <li class="list-inline-item">
-                        <a href="page.html">About us</a>
+                    <li (click)="about()" class="list-inline-item fa">
+                        About us
                     </li>
                     <li class="list-inline-item">&sdot;</li>
-                    <li class="list-inline-item">
-                        <a href="page.html">Refunds</a>
+                    <li (click)="ref()" class="list-inline-item fa" >
+                        Refunds
                     </li>
                     <li class="list-inline-item">&sdot;</li>
-                    <li class="list-inline-item">
-                        <a href="page.html">Terms and Privacy</a>
+                    <li (click)="team()" class="list-inline-item fa ">
+                        Terms and Privacy
                     </li>
                     <li class="list-inline-item">&sdot;</li>
-                    <li class="list-inline-item">
-                        <a href="contact.html">Contact</a>
-                    </li>
+                    
                 </ul>
-                <p class="small mb-4 mb-lg-0">Ramadan Byalk &copy; 2018. All Rights Reserved.</p>
+                <p class="small mb-4 mb-lg-0">Mohamed Bouzid &copy; 2020. All Rights Reserved.</p>
             </div>
             <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
                 <ul class="list-inline mb-0">
